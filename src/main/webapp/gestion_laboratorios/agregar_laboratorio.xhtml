@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="content">
+
+                <p:commandButton value="Agregar Laboratorio" oncomplete="agregarLaboratorioDialog.show()" />
+
+                <p:dataTable paginator="true" rows="7" paginatorPosition="bottom" id="id_tabla_laboratorios"  value="#{gestionLaboratoriosMB.laboratoriosActuales}" var="laboratorio">
+                    <f:facet name="header">
+                        LABORATORIOS
+                    </f:facet>
+                    <p:column headerText="Rut" width="200">
+                        #{laboratorio.rutLaboratorio}
+                    </p:column>
+                    <p:column headerText="Nombre" width="200">
+                        #{laboratorio.nombre}
+                    </p:column>
+                    <p:column headerText="Telefono" width="200">
+                        #{laboratorio.telefono}
+                    </p:column>
+                    <p:column headerText="Dirección" width="200">
+                        #{laboratorio.direccion}
+                    </p:column>
+                    <p:column headerText="Representante" width="200">
+                        #{laboratorio.representante}
+                    </p:column>
+                     <p:column headerText="Email" width="200">
+                        #{laboratorio.email}
+                    </p:column>
+                    <p:column headerText="Editar" width="100">
+                        <p:commandButton value="Editar" oncomplete="editarLaboratorioDialog.show()" actionListener="#{gestionLaboratoriosMB.seleccionarLaboratorio(laboratorio)}" update=":id_editar_laboratorio" />
+                    </p:column>
+                </p:dataTable>
+                <p:dialog width="600" height="400" id="id_editar_laboratorio" header="Editar Laboratorio" widgetVar="editarLaboratorioDialog">
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rut: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.laboratorioSeleccionado.rutLaboratorio}" />
+                            
+                            <h:outputText value="Nombre: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.laboratorioSeleccionado.nombre}" />
+                            
+                            <h:outputText value="Telefono: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.laboratorioSeleccionado.telefono}" />
+                            
+                            <h:outputText value="Dirección: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.laboratorioSeleccionado.direccion}" />
+                            
+                            <h:outputText value="Representante: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.laboratorioSeleccionado.representante}" />
+
+                            <h:outputText value="Email: " />
+                            <h:inputTextarea value="#{gestionLaboratoriosMB.laboratorioSeleccionado.email}"/>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Modificar" actionListener="#{gestionLaboratoriosMB.modificarLaboratorio}" oncomplete="editarLaboratorioDialog.hide()" update=":id_tabla_laboratorios" />
+                        <p:commandButton value="Cancelar" />
+
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog width="600" height="400" id="id_agregar_laboratorio" header="Agregar Laboratorio" widgetVar="agregarLaboratorioDialog">
+                    <h:form id="id_form_agregar_laboratorio">
+
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Rut: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.rut}" />
+                            
+                            <h:outputLabel value="Nombre: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.nombre}" />
+
+                            <h:outputLabel value="Telefono: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.telefono}" />
+                            
+                            <h:outputLabel value="Direccion: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.direccion}" />
+                            
+                            <h:outputLabel value="Representante: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.representante}" />
+                            
+                            <h:outputLabel value="Email: " />
+                            <h:inputText value="#{gestionLaboratoriosMB.email}" />
+                        </h:panelGrid>
+                        <p:commandButton value="Agregar" action="#{gestionLaboratoriosMB.agregarLaboratorio()}" ajax="true" update=":id_tabla_laboratorios :id_form_growl:id_growl @form" oncomplete="agregarLaboratorioDialog.hide()"/>
+                        <p:commandButton value="Cancelar"  />
+
+
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

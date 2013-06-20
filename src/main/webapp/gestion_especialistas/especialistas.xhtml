@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="content">
+
+                <p:commandButton value="Agregar Especialista" oncomplete="agregarEspecialistaDialog.show()" />
+
+                <p:dataTable paginator="true" rows="7" paginatorPosition="bottom" id="id_tabla_especialistas"  value="#{gestionEspecialistasMB.especialistasActuales}" var="especialista">
+                    <f:facet name="header">
+                        ESPECIALISTAS
+                    </f:facet>
+                    <p:column headerText="Rut o Pasaporte" width="200">
+                        #{especialista.rutPasaporte}
+                    </p:column>
+                    <p:column headerText="Nombre" width="200">
+                        #{especialista.nombre}
+                    </p:column>
+                    <p:column headerText="Telefono" width="200">
+                        #{especialista.telefono}
+                    </p:column>
+                    <p:column headerText="Celular" width="200">
+                        #{especialista.celular}
+                    </p:column>
+                    <p:column headerText="Fecha de Nacimiento" width="200">
+                        <h:outputText value="#{especialista.fechaNacimiento}" >
+                            <f:convertDateTime />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Email" width="200">
+                        #{especialista.email}
+                    </p:column>
+                    <p:column headerText="Editar" width="100">
+                        <p:commandButton value="Editar" oncomplete="editarEspecialistaDialog.show()" actionListener="#{gestionEspecialistasMB.seleccionarEspecialista(especialista)}" update=":id_editar_especialista" />
+                    </p:column>
+                </p:dataTable>
+                <p:dialog width="400" height="300" id="id_editar_especialista" header="Editar Especialista" widgetVar="editarEspecialistaDialog">
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Rut o pasaporte: " />
+                            <h:inputText value="#{gestionEspecialistasMB.especialistaSeleccionado.rutPasaporte}" />
+
+                            <h:outputText value="Nombre: " />
+                            <h:inputText value="#{gestionEspecialistasMB.especialistaSeleccionado.nombre}" />
+
+                            <h:outputText value="Telefono: " />
+                            <h:inputText value="#{gestionEspecialistasMB.especialistaSeleccionado.telefono}" />
+
+                            <h:outputText value="Celular: " />
+                            <h:inputText value="#{gestionEspecialistasMB.especialistaSeleccionado.celular}" />
+
+                            <h:outputText value="Fecha de Nacimiento: " />
+                            <p:calendar value="#{gestionEspecialistasMB.especialistaSeleccionado.fechaNacimiento}" />
+                                
+                            <h:outputText value="Email: " />
+                            <h:inputText value="#{gestionEspecialistasMB.especialistaSeleccionado.email}"/>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Modificar" actionListener="#{gestionEspecialistasMB.modificarEspecialista}" oncomplete="editarEspecialistaDialog.hide()" update=":id_tabla_especialistas" />
+                        <p:commandButton value="Cancelar" />
+
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog width="700" height="500" id="id_agregar_especialista" header="Agregar Especialista" widgetVar="agregarEspecialistaDialog">
+                    <h:form id="id_form_agregar_especialista">
+
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Rut o pasaporte: " />
+                            <h:inputText value="#{gestionEspecialistasMB.rut}" />
+
+                            <h:outputLabel value="Nombre: " />
+                            <h:inputText value="#{gestionEspecialistasMB.nombre}" />
+
+                            <h:outputLabel value="Telefono: " />
+                            <h:inputText value="#{gestionEspecialistasMB.telefono}" />
+
+                            <h:outputLabel value="Celular: " />
+                            <h:inputText value="#{gestionEspecialistasMB.celular}" />
+
+                            <h:outputLabel value="Fecha de Nacimiento: " />
+                            <p:calendar value="#{gestionEspecialistasMB.fecha_nacimiento}" />
+
+                            <h:outputLabel value="Email: " />
+                            <h:inputText value="#{gestionEspecialistasMB.email}" />
+                            
+                            <h:outputLabel value="Seleccione especialidades: " />
+                            <p:pickList value="#{gestionEspecialistasMB.especialidades}" var="especialidad" converter="especialidadConverter" itemValue="#{especialidad}" itemLabel="#{especialidad.nombre}">
+                                
+                            </p:pickList>
+                            
+                        </h:panelGrid>
+                        <p:commandButton value="Agregar" action="#{gestionEspecialistasMB.agregarEspecialista}" ajax="false" update=":id_tabla_especialistas :id_form_growl:id_growl @form" oncomplete="agregarEspecialistaDialog.hide()"/>
+                        <p:commandButton value="Cancelar"  />
+
+
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="content">
+                <p:dataTable paginator="true" rows="7" paginatorPosition="bottom" id="id_tabla_pacientes"  value="#{gestionPacientesMB.pacientesActuales}" var="paciente">
+                    <f:facet name="header">
+                        PACIENTES
+                    </f:facet>
+                    <p:column headerText="Rut" width="200">
+                        #{paciente.rut}
+                    </p:column>
+                    <p:column headerText="Nombre" width="200">
+                        #{paciente.nombre}
+                    </p:column>
+                    <p:column headerText="Telefono" width="200">
+                        #{paciente.telefono}
+                    </p:column>
+                    <p:column headerText="Celular" width="200">
+                        #{paciente.celular}
+                    </p:column>
+                    <p:column headerText="Dirección" width="200">
+                        #{laboratorio.direccion}
+                    </p:column>
+                    <p:column headerText="Fecha de Nacimiento" width="200">
+                        #{laboratorio.fecha_nacimiento}
+                    </p:column>
+                     <p:column headerText="Email" width="200">
+                        #{laboratorio.email}
+                    </p:column>
+                    <p:column headerText="Editar" width="100">
+                        <p:commandButton value="Editar" oncomplete="editarPacienteDialog.show()" actionListener="#{gestionPacientesMB.seleccionarPaciente(paciente)}" update=":id_editar_paciente" />
+                    </p:column>
+                </p:dataTable>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

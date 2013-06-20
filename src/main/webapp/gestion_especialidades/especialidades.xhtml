@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+       
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="content">
+
+                <p:commandButton value="Agregar Especialidad" oncomplete="agregarEspecialidadDialog.show()" />
+
+                <p:dataTable paginator="true" rows="7" paginatorPosition="bottom" id="id_tabla_especialidades"  value="#{gestionEspecialidadesMB.especialidadesActuales}" var="especialidad">
+                    <f:facet name="header">
+                        Especialidades
+                    </f:facet>
+                    <p:column headerText="Nombre" width="200">
+                        #{especialidad.nombre}
+                    </p:column>
+                    <p:column headerText="Descripción">
+                        #{especialidad.descripcion}
+                    </p:column>
+                    <p:column headerText="Editar" width="100">
+                        <p:commandButton value="Editar" oncomplete="editarEspecialidadDialog.show()" actionListener="#{gestionEspecialidadesMB.seleccionarEspecialidad(especialidad)}" update=":id_editar_especialidad" />
+                    </p:column>
+                </p:dataTable>
+
+
+                <p:dialog width="600" height="400" id="id_editar_especialidad" header="Editar Especialidad" widgetVar="editarEspecialidadDialog">
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nombre: " />
+                            <h:inputText value="#{gestionEspecialidadesMB.especialidadSeleccionado.nombre}" />
+
+                            <h:outputText value="Descripción: " />
+                            <h:inputTextarea value="#{gestionEspecialidadesMB.especialidadSeleccionado.descripcion}"/>
+                        </h:panelGrid>
+
+                        <p:commandButton value="Modificar" actionListener="#{gestionEspecialidadesMB.modificarEspecialidad}" oncomplete="editarEspecialidadDialog.hide()" update=":id_tabla_especialidades" />
+                        <p:commandButton value="Cancelar" />
+
+                    </h:form>
+                </p:dialog>
+
+                <p:dialog width="600" height="400" id="id_agregar_especialidad" header="Agregar Especialidad" widgetVar="agregarEspecialidadDialog">
+                    <h:form id="id_form_agregar_especialidad">
+
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Nombre: " />
+                            <h:inputText value="#{gestionEspecialidadesMB.nombre}" />
+
+                            <h:outputLabel value="Descripción: " />
+                            <h:inputTextarea value="#{gestionEspecialidadesMB.descripcion}" />
+                        </h:panelGrid>
+                        <p:commandButton value="Agregar" action="#{gestionEspecialidadesMB.agregarEspecialidad()}" ajax="true" update=":id_tabla_especialidades :id_form_growl:id_growl @form" oncomplete="agregarEspecialidadDialog.hide()"/>
+                        <p:commandButton value="Cancelar"  />
+
+                        
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
