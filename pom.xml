@@ -13,6 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <codi.version>1.0.5</codi.version>
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>

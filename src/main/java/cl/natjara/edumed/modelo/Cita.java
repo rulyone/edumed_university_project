@@ -7,16 +7,17 @@ package cl.natjara.edumed.modelo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,12 +32,17 @@ public class Cita implements Serializable {
     private Long id;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date fecha;
+    @Column(nullable = false)
     private int numeroDeModulos; //cada modulo vale 15 minutos.
     @ManyToOne
+    @JoinColumn(nullable = false)
+    @NotNull
     private Ficha ficha;
     @OneToOne
     private Pago pago;
     @ManyToOne
+    @JoinColumn(nullable = false)
+    @NotNull
     private Especialista especialista;
     @OneToMany(mappedBy = "cita")
     private List<SolicitudTratamiento> solicitudesTratamiento;

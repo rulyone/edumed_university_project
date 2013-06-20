@@ -61,7 +61,7 @@ public class GestionEspecialistasMB implements Serializable{
     public String agregarEspecialista() {
         System.out.println("GestionEspecialistasMB.agregarEspecialista()");
         try {
-            servicios.agregarEspecialista(rut, nombre, telefono, email, celular, fecha_nacimiento, especialidades.getTarget());
+            servicios.agregarEspecialista(rut, nombre, telefono, celular, email, fecha_nacimiento, especialidades.getTarget());
             especialistasActuales = servicios.obtenerEspecialistas();
             this.nombre = null;
             this.rut = null;

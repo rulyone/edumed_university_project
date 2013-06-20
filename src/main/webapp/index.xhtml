@@ -10,9 +10,12 @@
         <ui:composition template="/TEMPLATE_EDUMED.xhtml">
 
             <ui:define name="content">
-                <table width="742" align="center">
+                    <h:form>
+                        <h:outputText value="Ingrese RUT del paciente: " />
+                        <h:inputText value="#{indexMB.rutPaciente}" />
+                        <p:commandButton value="VER" action="#{indexMB.mostrarOpcionesPaciente()}" ajax="false" />
+                    </h:form>
                     <h:graphicImage name="index.png" library="imagenes" class="center" />
-                </table>
                 
             </ui:define>
 

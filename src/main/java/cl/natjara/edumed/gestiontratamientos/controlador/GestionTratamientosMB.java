@@ -5,6 +5,7 @@
 package cl.natjara.edumed.gestiontratamientos.controlador;
 
 import cl.natjara.edumed.gestiontratamientos.servicios.GestionTratamientosServices;
+import cl.natjara.edumed.modelo.Cita;
 import cl.natjara.edumed.modelo.Tratamiento;
 import cl.natjara.edumed.utils.ExcepcionLogicaDeNegocio;
 import java.io.Serializable;
@@ -33,6 +34,8 @@ public class GestionTratamientosMB implements Serializable{
     GestionTratamientosServices servicios;
     private String nombre;
     private String descripcion;
+    
+    private Cita cita;
     
     private List<Tratamiento> tratamientosActuales;
     

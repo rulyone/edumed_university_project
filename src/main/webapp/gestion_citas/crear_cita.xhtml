@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="id_ficha" value="#{gestionCitasMB.fichaPaciente}" />
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="content">
+
+                <h:form>
+                    <!--                    private Date fechaCita;
+                        private Integer numeroDeModulos;
+                        private Ficha fichaPaciente;
+                        private Especialista especialistaSeleccionado;
+                    -->
+                    Generando Cita para el paciente #{gestionCitasMB.fichaPaciente.paciente.nombre}
+                    <h:panelGrid>
+                        <h:outputLabel value="Fecha Cita: " />
+                        <p:calendar value="#{gestionCitasMB.fechaCita}" 
+                                    pattern="dd/MM/yyyy HH:mm"
+                                    stepHour="1"
+                                    stepMinute="15"/>
+                        
+                        <h:outputLabel value="Número de Modulos: " />
+                        <h:inputText value="#{gestionCitasMB.numeroDeModulos}" />
+                        
+                        <h:outputLabel value="Especialista: " />
+                        <h:selectOneMenu value="#{gestionCitasMB.especialistaSeleccionado}" required="true">  
+                            <f:converter converterId="especialistaConverter" />
+                            <f:selectItem itemDisabled="true" noSelectionOption="true" itemLabel="Seleccione un especialista" />
+                            <f:selectItems value="#{gestionCitasMB.especialistasActuales}" var="especialista" itemLabel="(#{especialista.rutPasaporte}) #{especialista.nombre}" itemValue="#{especialista}" />
+                        </h:selectOneMenu>
+                        
+                        
+                    </h:panelGrid>
+                    
+                    <p:commandButton value="Crear Cita" action="#{gestionCitasMB.agregarCita()}" ajax="false" />
+                    
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

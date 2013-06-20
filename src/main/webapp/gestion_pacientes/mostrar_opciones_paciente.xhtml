@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="/TEMPLATE_EDUMED.xhtml">
+
+            <ui:define name="metadata">
+                <f:metadata>
+                    <f:viewParam name="id_ficha" value="#{mostrarOpcionesPacienteMB.ficha}" />
+                </f:metadata>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton value="Crear CITA" action="#{mostrarOpcionesPacienteMB.irACrearCita()}" ajax="false" />
+                    
+                    <p:commandButton value="Ingresar PAGO" action="#{mostrarOpcionesPacienteMB.irAIngresarPago()}" ajax="false" />
+                    
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

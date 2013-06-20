@@ -6,15 +6,17 @@ package cl.natjara.edumed.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -22,6 +24,9 @@ import org.hibernate.validator.constraints.Email;
  * @author Natjara
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Paciente.buscarPorRut", query = "SELECT p FROM Paciente p WHERE p.rut = :rut")
+})
 public class Paciente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +45,8 @@ public class Paciente implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fechaNacimiento;
     @OneToOne
+    @JoinColumn(nullable = false)
+    @NotNull
     private Ficha ficha;
 
     public String getCelular() {

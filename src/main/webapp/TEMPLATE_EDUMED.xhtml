@@ -5,6 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
+    <ui:insert name="metadata"/>
+    
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="default.css" library="css" />
@@ -17,7 +19,7 @@
     <h:body>
 
         <h:form id="id_form_growl">
-            <p:growl id="id_growl" globalOnly="true" sticky="true"/>
+            <p:growl id="id_growl" sticky="true"/>
         </h:form>
         <div id="top" align="center">
             <h:graphicImage name="head2.jpg" library="imagenes" />

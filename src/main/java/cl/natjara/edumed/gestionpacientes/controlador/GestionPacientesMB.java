@@ -14,10 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.omnifaces.util.Messages;
 
@@ -38,53 +35,27 @@ public class GestionPacientesMB implements Serializable {
     private String direccion;
     private Date fecha_nacimiento;
     private String email;
+    private boolean sexo;
     
-    private List<Paciente> pacientesActuales;
-    private Paciente pacienteSeleccionado;
-
     public GestionPacientesMB() {
     }
 
     @PostConstruct
     private void init() {
-        //INICIALIZAMOS LA LISTA DE Laboratorios.
-        System.out.println("PASE POR ACÁ...");
-        pacientesActuales = servicios.obtenerPacientes();
     }
-
-    public void seleccionarPaciente(Paciente paciente) {
-        System.out.println("seleccionarPaciente");
-        this.pacienteSeleccionado = paciente;
-    }
-
-    public void modificarPaciente() {
+    
+    public String crearPaciente() {
+        
         try {
-            servicios.modificarLaboratorio(rut, nombre, telefono, celular, direccion, fecha_nacimiento, email);
-            Messages.addGlobalInfo("Paciente modificado satisfactoriamente.");
-            pacientesActuales = servicios.obtenerPacientes();
+            Paciente p = servicios.agregarPacienteNuevo(rut, nombre, direccion, telefono, celular, sexo, email, fecha_nacimiento);
+            return "/gestion_pacientes/mostrar_opciones_paciente.xhtml?faces-redirect=true&id_ficha=" + p.getFicha().getId();
         } catch (ExcepcionLogicaDeNegocio ex) {
             Messages.addGlobalError(ex.getMessage());
+            return "/index.xhtml";
         }
         
-    
     }
 
-    public List<Paciente> getPacientesActuales() {
-        return pacientesActuales;
-    }
-
-    public void setPacientesActuales(List<Paciente> pacientesActuales) {
-        this.pacientesActuales = pacientesActuales;
-    }
-
-    public Paciente getPacienteSeleccionado() {
-        return pacienteSeleccionado;
-    }
-
-    public void setPacienteSeleccionado(Paciente pacienteSeleccionado) {
-        this.pacienteSeleccionado = pacienteSeleccionado;
-    }
-    
     public String getRut() {
         return rut;
     }
@@ -139,5 +110,13 @@ public class GestionPacientesMB implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isSexo() {
+        return sexo;
+    }
+
+    public void setSexo(boolean sexo) {
+        this.sexo = sexo;
     }
 }

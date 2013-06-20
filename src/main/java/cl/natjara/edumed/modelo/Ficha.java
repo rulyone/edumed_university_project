@@ -10,9 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -28,6 +30,8 @@ public class Ficha implements Serializable {
     @Lob
     private String descripcion;
     @OneToOne(mappedBy = "ficha")
+    @JoinColumn(nullable = false)
+    @NotNull
     private Paciente paciente;
     @OneToMany(mappedBy = "ficha")
     private List<Cita> citas;

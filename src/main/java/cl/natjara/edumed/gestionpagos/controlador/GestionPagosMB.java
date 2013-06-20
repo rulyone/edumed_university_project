@@ -43,17 +43,17 @@ public class GestionPagosMB implements Serializable{
     }
 
     public String agregarPago() {
-        try {
-            servicios.agregarPago(fecha, monto, descripcion);
-            pagosActuales = servicios.obtenerPagos();
-            this.fecha = null;
-            this.monto = null;
-            this.descripcion = null;
-            Messages.addGlobalInfo("Pago agregado satisfactoriamente.");
-        } catch (ExcepcionLogicaDeNegocio ex) {
-            Messages.addGlobalError(ex.getMessage());
-            return null; //LO MANTIENE EN LA MISMA PÁGINA
-        }
+//        try {
+//            servicios.agregarPago(fecha, monto, descripcion);
+//            pagosActuales = servicios.obtenerPagos();
+//            this.fecha = null;
+//            this.monto = null;
+//            this.descripcion = null;
+//            Messages.addGlobalInfo("Pago agregado satisfactoriamente.");
+//        } catch (ExcepcionLogicaDeNegocio ex) {
+//            Messages.addGlobalError(ex.getMessage());
+//            return null; //LO MANTIENE EN LA MISMA PÁGINA
+//        }
         return null;
     }
 

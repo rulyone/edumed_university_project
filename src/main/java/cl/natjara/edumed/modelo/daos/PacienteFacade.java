@@ -7,6 +7,7 @@ package cl.natjara.edumed.modelo.daos;
 import cl.natjara.edumed.modelo.Paciente;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -27,4 +28,16 @@ public class PacienteFacade extends AbstractFacade<Paciente> {
     public PacienteFacade() {
         super(Paciente.class);
     }
+    
+    public Paciente buscarPacientePorRut(String rutPaciente) {
+        try {
+            return em.createNamedQuery("Paciente.buscarPorRut", Paciente.class)
+                .setParameter("rut", rutPaciente)
+                .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+            
+    }
+    
 }

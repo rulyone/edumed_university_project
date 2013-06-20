@@ -3,42 +3,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
 
     <body>
 
         <ui:composition template="/TEMPLATE_EDUMED.xhtml">
 
             <ui:define name="content">
-                <p:dataTable paginator="true" rows="7" paginatorPosition="bottom" id="id_tabla_pacientes"  value="#{gestionPacientesMB.pacientesActuales}" var="paciente">
-                    <f:facet name="header">
-                        PACIENTES
-                    </f:facet>
-                    <p:column headerText="Rut" width="200">
-                        #{paciente.rut}
-                    </p:column>
-                    <p:column headerText="Nombre" width="200">
-                        #{paciente.nombre}
-                    </p:column>
-                    <p:column headerText="Telefono" width="200">
-                        #{paciente.telefono}
-                    </p:column>
-                    <p:column headerText="Celular" width="200">
-                        #{paciente.celular}
-                    </p:column>
-                    <p:column headerText="Dirección" width="200">
-                        #{laboratorio.direccion}
-                    </p:column>
-                    <p:column headerText="Fecha de Nacimiento" width="200">
-                        #{laboratorio.fecha_nacimiento}
-                    </p:column>
-                     <p:column headerText="Email" width="200">
-                        #{laboratorio.email}
-                    </p:column>
-                    <p:column headerText="Editar" width="100">
-                        <p:commandButton value="Editar" oncomplete="editarPacienteDialog.show()" actionListener="#{gestionPacientesMB.seleccionarPaciente(paciente)}" update=":id_editar_paciente" />
-                    </p:column>
-                </p:dataTable>
+                <h:form>
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Rut: " />
+                        <h:inputText value="#{gestionPacientesMB.rut}" />
+                        
+                        <h:outputLabel value="Nombre: " />
+                        <h:inputText value="#{gestionPacientesMB.nombre}" />
+                        
+                        <h:outputLabel value="Teléfono: " />
+                        <h:inputText value="#{gestionPacientesMB.telefono}" />
+                        
+                        <h:outputLabel value="Celular: " />
+                        <h:inputText value="#{gestionPacientesMB.celular}" />
+                        
+                        <h:outputLabel value="Dirección: " />
+                        <h:inputText value="#{gestionPacientesMB.direccion}" />
+                        
+                        <h:outputLabel value="Fecha Nacimiento: " />
+                        <p:calendar value="#{gestionPacientesMB.fecha_nacimiento}" />
+                        
+                        <h:outputLabel value="Email: " />
+                        <h:inputText value="#{gestionPacientesMB.email}" />
+                        
+                    </h:panelGrid>
+                    
+                    <p:commandButton value="AGREGAR PACIENTE" action="#{gestionPacientesMB.crearPaciente()}" ajax="false" />
+                    
+                </h:form>
             </ui:define>
 
         </ui:composition>

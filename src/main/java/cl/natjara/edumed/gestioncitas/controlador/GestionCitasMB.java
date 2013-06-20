@@ -5,18 +5,14 @@
 package cl.natjara.edumed.gestioncitas.controlador;
 
 import cl.natjara.edumed.gestioncitas.servicios.GestionCitasServices;
-import cl.natjara.edumed.gestionpacientes.servicios.GestionPacientesServices;
-import cl.natjara.edumed.modelo.Cita;
-import cl.natjara.edumed.modelo.Paciente;
+import cl.natjara.edumed.modelo.Especialista;
+import cl.natjara.edumed.modelo.Ficha;
 import cl.natjara.edumed.utils.ExcepcionLogicaDeNegocio;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.omnifaces.util.Messages;
@@ -31,85 +27,70 @@ public class GestionCitasMB implements Serializable{
 
     private @Inject
     GestionCitasServices servicios;
-    private Long id;
-    private Date fecha;
-    private Integer monto;
-
-    private List<Cita> citasActuales;
-    private Cita citaSeleccionado;
+    private Date fechaCita;
+    private Integer numeroDeModulos;
+    private Ficha fichaPaciente;
+    private Especialista especialistaSeleccionado;
+    
+    private List<Especialista> especialistasActuales;
 
     public GestionCitasMB() {
     }
 
     @PostConstruct
     private void init() {
-        //INICIALIZAMOS LA LISTA DE Laboratorios.
-        System.out.println("PASE POR ACÁ...");
-        citasActuales = servicios.obtenerCitas();
+       this.especialistasActuales = servicios.obtenerEspecialistas();
     }
 
     public String agregarCita() {
         try {
-            servicios.agregarCita(id, fecha, monto);
-            citasActuales = servicios.obtenerCitas();
-            this.fecha = null;
-            this.monto = null;
-
+            Long idCita = servicios.agregarCita(fechaCita, numeroDeModulos, fichaPaciente, especialistaSeleccionado);            
             Messages.addGlobalInfo("Cita agregada satisfactoriamente.");
+            return "/gestion_tratamientos/agregar_tratamiento.xhtml?faces-redirect=true&id_cita=" + idCita;
         } catch (ExcepcionLogicaDeNegocio ex) {
             Messages.addGlobalError(ex.getMessage());
-            return null; //LO MANTIENE EN LA MISMA PÁGINA
-        }
-        return null;
+            return "/index.xhtml"; 
+        }        
     }
 
-    public void seleccionarCita(Cita cita) {
-        System.out.println("seleccionarCita");
-        this.citaSeleccionado = cita;
+    public Date getFechaCita() {
+        return fechaCita;
     }
 
-    public void modificarCita() {
-        try {
-            servicios.modificarCita(citaSeleccionado.getId(), citaSeleccionado.getFecha(),citaSeleccionado.getNumeroDeModulos());
-            Messages.addGlobalInfo("Cita modificada satisfactoriamente.");
-            citasActuales = servicios.obtenerCitas();
-        } catch (ExcepcionLogicaDeNegocio ex) {
-            Messages.addGlobalError(ex.getMessage());
-        }
+    public void setFechaCita(Date fechaCita) {
+        this.fechaCita = fechaCita;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Integer getNumeroDeModulos() {
+        return numeroDeModulos;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setNumeroDeModulos(Integer numeroDeModulos) {
+        this.numeroDeModulos = numeroDeModulos;
     }
 
-    public Integer getMonto() {
-        return monto;
+    public Ficha getFichaPaciente() {
+        return fichaPaciente;
     }
 
-    public void setMonto(Integer monto) {
-        this.monto = monto;
+    public void setFichaPaciente(Ficha fichaPaciente) {
+        this.fichaPaciente = fichaPaciente;
     }
 
-    public List<Cita> getCitasActuales() {
-        return citasActuales;
+    public Especialista getEspecialistaSeleccionado() {
+        return especialistaSeleccionado;
     }
 
-    public void setCitasActuales(List<Cita> citasActuales) {
-        this.citasActuales = citasActuales;
+    public void setEspecialistaSeleccionado(Especialista especialista) {
+        this.especialistaSeleccionado = especialista;
     }
 
-    public Cita getCitaSeleccionado() {
-        return citaSeleccionado;
+    public List<Especialista> getEspecialistasActuales() {
+        return especialistasActuales;
     }
 
-    public void setCitaSeleccionado(Cita citaSeleccionado) {
-        this.citaSeleccionado = citaSeleccionado;
+    public void setEspecialistasActuales(List<Especialista> especialistasActuales) {
+        this.especialistasActuales = especialistasActuales;
     }
-
-
  
 }

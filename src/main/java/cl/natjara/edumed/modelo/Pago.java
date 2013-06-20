@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Pago implements Serializable {
     private Integer monto;
     private String descripcion;
     @OneToOne(mappedBy = "pago")
+    @NotNull
     private Cita cita;
 
     //****************GETTERS Y SETTERS***********************//
